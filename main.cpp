@@ -99,8 +99,9 @@ int main() {
         // }
         if (GuiButton(Rectangle{ 170, 80, 100, 30 }, "Narysuj")) {
             // TraceLog(LOG_INFO, "Przycisk zostal klikniety! Zawartosc inputa to: %s", x);
-            coordinate_system.DrawFunction(equation);
         }
+            coordinate_system.DrawFunction(equation);
+
 
         EndDrawing();
     }

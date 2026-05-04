@@ -28,7 +28,7 @@ public:
     void ChangePixelStep();
     std::string CutPrefix(const std::string& expr);
     void DrawFunction(const std::string& expr);
-    Vector2 ConvertXY(int x, int y);
+    Vector2 ConvertXY(double x, double y);
 
 };
 
