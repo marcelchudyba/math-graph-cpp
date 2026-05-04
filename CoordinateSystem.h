@@ -16,6 +16,7 @@ public:
     float scale;
     float length_of_step;
     int pixel_step;
+    int start_cart_x, end_cart_x;
     CoordinateSystem(int screen_width, int screen_height,float scale,int gridStep);
     void DrawGrid();
     void DrawCoordinateSystem();

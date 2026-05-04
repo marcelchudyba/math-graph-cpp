@@ -9,6 +9,7 @@
 CoordinateSystem::CoordinateSystem(int screen_width, int screen_height, float scale,int gridStep) :
     screen_width(screen_width), screen_height(screen_height), scale(scale),gridStep(gridStep),length_of_step(1) {
     GetCenter();
+    UpdateScale(scale);
 };
 
 void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, bool direction) {
@@ -57,6 +58,19 @@ void CoordinateSystem::UpdateScale(int new_value) {
     }
 
     pixel_step = gridStep * scale;
+
+    //start its a first number from the left on OX in our cartesian system its analogous to the end_start its the same but from the right side
+    //because of that we can do a loop which is optimazed for only what is visible on screen
+    //+1 on each is for that to make sure that our char will start a little before our vision
+    start_cart_x = -1 * gridStep * (origin.x / pixel_step + gridStep) ;
+    end_cart_x = gridStep*(screen_width - origin.x) / pixel_step + gridStep;
+
+    //we
+    // start_cart_x = -1 * gridStep * (origin.x / pixel_step + gridStep) ;
+    // end_cart_x = gridStep*(screen_width - origin.x) / pixel_step + gridStep;
+
+    // TraceLog(LOG_INFO, "Start End: %i, %i", start_cart,end_cart);
+
 }
 
 
@@ -157,28 +171,26 @@ void CoordinateSystem::DrawFunction(const std::string &expr) {
             StoneMath::StoneMath eval = StoneMath::StoneMath(ready_expr);
 
 
-            //start its a first number from the left on OX in our cartesian system its analogous to the end_start its the same but from the right side
-            //because of that we can do a loop which is optimazed for only what is visible on screen
-            //+1 on each is for that to make sure that our char will start a little before our vision
-            int start_cart = -1 * gridStep * (origin.x / pixel_step + gridStep) ;
-            int end_cart = gridStep*(screen_width - origin.x) / pixel_step + gridStep;
-            TraceLog(LOG_INFO, "Start End: %i, %i", start_cart,end_cart);
 
-            double frequency = 0.1;
 
-            for(double i = start_cart; i <= end_cart; i+=frequency) {
+
+            double frequency = 1 / (scale / 5);
+            if(frequency > 0.20) frequency = 0.20;
+
+            for(double i = start_cart_x; i <= end_cart_x; i+=frequency) {
                  double starting_y = eval.Evaluate(i);
                  double ending_y = eval.Evaluate(i + frequency);
+
 
                 Vector2 starting_point_converted = ConvertXY(i, starting_y);
 
                 Vector2 ending_point_converted = ConvertXY(i+frequency, ending_y);
 
-                 DrawLine(starting_point_converted.x, starting_point_converted.y, ending_point_converted.x, ending_point_converted.y, RED);
+                 DrawLine(starting_point_converted.x, starting_point_converted.y, ending_point_converted.x, ending_point_converted.y, BLUE);
               }
 
          }catch(std::exception &e) {
-             // TraceLog(LOG_INFO, "Error: %s", e.what());
+             TraceLog(LOG_INFO, "Error: %s", e.what());
          }
 }
 
