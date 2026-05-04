@@ -30,7 +30,7 @@ int main() {
     while(WindowShouldClose() == false) {
 
         BeginDrawing();
-
+        DrawFPS(50,10);
         ClearBackground(RAYWHITE);
 
 
@@ -62,7 +62,6 @@ int main() {
             TraceLog(LOG_INFO, "Wartosc scale: %0.0f", scale);
 
         }
-
 
         //Gui
         DrawText(TextFormat("x: %.0f y: %.0f", coordinate_system.origin.x ,coordinate_system.origin.y), 10, 50, 20, WHITE);
