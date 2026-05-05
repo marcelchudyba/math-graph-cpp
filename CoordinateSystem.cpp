@@ -65,13 +65,9 @@ void CoordinateSystem::UpdateScale(int new_value) {
     start_cart_x = -1 * gridStep * (origin.x / pixel_step) - gridStep;
     end_cart_x = gridStep*(screen_width - origin.x) / pixel_step + gridStep;
 
-    //we
-    start_cart_y = -1 * gridStep * ((screen_height - origin.y) / pixel_step) - gridStep; ;
+    //this is for the OY to not render if nessecery
+    start_cart_y = -1 * gridStep * ((screen_height - origin.y) / pixel_step) - gridStep;
     end_cart_y= gridStep*(origin.y) / pixel_step + gridStep;
-    TraceLog(LOG_INFO, "X: Start End: %i, %i", start_cart_x,end_cart_x);
-
-    TraceLog(LOG_INFO, "Y: tart End: %i, %i", start_cart_y,end_cart_y);
-
 }
 
 
