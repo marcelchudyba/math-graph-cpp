@@ -61,15 +61,16 @@ void CoordinateSystem::UpdateScale(int new_value) {
 
     //start its a first number from the left on OX in our cartesian system its analogous to the end_start its the same but from the right side
     //because of that we can do a loop which is optimazed for only what is visible on screen
-    //+1 on each is for that to make sure that our char will start a little before our vision
-    start_cart_x = -1 * gridStep * (origin.x / pixel_step + gridStep) ;
+    //+gridstep on each is for that to make sure that our char will start a little before our vision
+    start_cart_x = -1 * gridStep * (origin.x / pixel_step) - gridStep;
     end_cart_x = gridStep*(screen_width - origin.x) / pixel_step + gridStep;
 
     //we
-    // start_cart_x = -1 * gridStep * (origin.x / pixel_step + gridStep) ;
-    // end_cart_x = gridStep*(screen_width - origin.x) / pixel_step + gridStep;
+    start_cart_y = -1 * gridStep * ((screen_height - origin.y) / pixel_step) - gridStep; ;
+    end_cart_y= gridStep*(origin.y) / pixel_step + gridStep;
+    TraceLog(LOG_INFO, "X: Start End: %i, %i", start_cart_x,end_cart_x);
 
-    // TraceLog(LOG_INFO, "Start End: %i, %i", start_cart,end_cart);
+    TraceLog(LOG_INFO, "Y: tart End: %i, %i", start_cart_y,end_cart_y);
 
 }
 
@@ -170,17 +171,20 @@ void CoordinateSystem::DrawFunction(const std::string &expr) {
             std::string ready_expr = CutPrefix(expr);
             StoneMath::StoneMath eval = StoneMath::StoneMath(ready_expr);
 
-
-
-
-
             double frequency = 1 / (scale / 5);
-            if(frequency > 0.20) frequency = 0.20;
+            if(frequency > 0.30) frequency = 0.30;
 
             for(double i = start_cart_x; i <= end_cart_x; i+=frequency) {
                  double starting_y = eval.Evaluate(i);
                  double ending_y = eval.Evaluate(i + frequency);
 
+                if(start_cart_y > starting_y && start_cart_y > ending_y ) {
+                    continue;
+                }
+
+                if(end_cart_y < starting_y && end_cart_y <  ending_y ) {
+                    continue;
+                }
 
                 Vector2 starting_point_converted = ConvertXY(i, starting_y);
 

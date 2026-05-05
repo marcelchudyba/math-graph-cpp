@@ -20,7 +20,6 @@ int main() {
     CoordinateSystem coordinate_system = CoordinateSystem(screen_width, screen_height, scale,step);
 
 
-
     char equation[64] = "";
 
     bool editMode = false;
