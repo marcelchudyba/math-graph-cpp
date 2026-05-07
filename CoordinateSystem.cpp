@@ -170,9 +170,12 @@ void CoordinateSystem::DrawFunction(const std::string &expr) {
             double frequency = 1 / (scale / 5);
             if(frequency > 0.30) frequency = 0.30;
 
+            double starting_y = 0;
+            double ending_y = 0;
+
             for(double i = start_cart_x; i <= end_cart_x; i+=frequency) {
-                 double starting_y = eval.Evaluate(i);
-                 double ending_y = eval.Evaluate(i + frequency);
+                starting_y = eval.Evaluate(i);
+                ending_y = eval.Evaluate(i + frequency);
 
                 if(start_cart_y > starting_y && start_cart_y > ending_y ) {
                     continue;
@@ -186,7 +189,7 @@ void CoordinateSystem::DrawFunction(const std::string &expr) {
 
                 Vector2 ending_point_converted = ConvertXY(i+frequency, ending_y);
 
-                 DrawLine(starting_point_converted.x, starting_point_converted.y, ending_point_converted.x, ending_point_converted.y, BLUE);
+                DrawLine(starting_point_converted.x, starting_point_converted.y, ending_point_converted.x, ending_point_converted.y, BLUE);
               }
 
          }catch(std::exception &e) {
