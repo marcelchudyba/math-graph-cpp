@@ -70,7 +70,6 @@ void CoordinateSystem::UpdateScale(int new_value) {
     end_cart_y= gridStep*(origin.y) / pixel_step + gridStep;
 }
 
-
 void CoordinateSystem::DrawGrid() {
 
         int center_of_grid_x = origin.x;
@@ -125,7 +124,6 @@ Vector2 CoordinateSystem::ConvertXY(double x, double y) {
 void CoordinateSystem::AddPoint(int x, int y) {
     points.push_back(Point(x,y));
 }
-
 
 void CoordinateSystem::DrawPoint(Point point) {
     Vector2 converted_point = ConvertXY(point.GetX(),point.GetY());
