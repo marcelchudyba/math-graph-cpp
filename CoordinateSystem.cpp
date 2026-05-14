@@ -42,8 +42,6 @@ void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, 
         else
             text_yy = y + text_y;
 
-
-
         DrawText(TextFormat("%i", value), text_xx, text_yy,15,  WHITE);
 }
 
@@ -160,7 +158,7 @@ std::string CoordinateSystem::CutPrefix(const std::string &expr) {
 }
 
 
-void CoordinateSystem::DrawFunction(const std::string &expr) {
+void CoordinateSystem::DrawFunction(const std::string &expr,Color color) {
         try {
             std::string ready_expr = CutPrefix(expr);
             StoneMath::StoneMath eval = StoneMath::StoneMath(ready_expr);
@@ -187,7 +185,7 @@ void CoordinateSystem::DrawFunction(const std::string &expr) {
 
                 Vector2 ending_point_converted = ConvertXY(i+frequency, ending_y);
 
-                DrawLine(starting_point_converted.x, starting_point_converted.y, ending_point_converted.x, ending_point_converted.y, BLUE);
+                DrawLine(starting_point_converted.x, starting_point_converted.y, ending_point_converted.x, ending_point_converted.y, color);
               }
 
          }catch(std::exception &e) {

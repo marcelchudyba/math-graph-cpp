@@ -1,0 +1,36 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Static and Dynamic Libraries
+*.gch
+*.pch
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+*.exe
+
+# CMake build directories (captured from image_84e9be.png)
+**/cmake-build-debug/
+**/cmake-build-release/
+/build/
+
+# IDE specific files (JetBrains / CLion)
+.idea/
+cmake-build-*/
+*.iml
+*.iws
+
+# Operating System files
+.DS_Store
+Thumbs.db

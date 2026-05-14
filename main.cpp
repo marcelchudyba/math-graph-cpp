@@ -7,6 +7,8 @@
 
 #include "CoordinateSystem.h"
 
+
+
 int main() {
 
     const int screen_width = 1280;
@@ -21,16 +23,21 @@ int main() {
 
 
     char equation[64] = "";
+    char equation2[64] = "";
 
     bool editMode = false;
+    bool editMode2 = false;
 
 
 
     while(WindowShouldClose() == false) {
 
         BeginDrawing();
-        DrawFPS(50,10);
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
+        coordinate_system.DrawCoordinateSystem();
+        coordinate_system.DrawFunction(equation,BLUE);
+        coordinate_system.DrawFunction(equation2,GREEN);
+
 
 
         //moving system
@@ -46,7 +53,7 @@ int main() {
             SetMouseCursor(DEFAULT);
         }
 
-        ClearBackground(BLACK);
+
 
         //scaling system
         float wheelMove = GetMouseWheelMove();
@@ -63,14 +70,20 @@ int main() {
         }
 
         //Gui
-        DrawText(TextFormat("x: %.0f y: %.0f", coordinate_system.origin.x ,coordinate_system.origin.y), 10, 50, 20, WHITE);
-        if (GuiTextBox(Rectangle{ 10, 80, 150, 30 }, equation, 64, editMode)) {
+        DrawRectangle(40, 80, 150, 30 , BLACK);
+        DrawRectangle(40, 140, 150, 30  , BLACK);
+
+        DrawFPS(5,10);
+        DrawText(TextFormat("x: %.0f y: %.0f", coordinate_system.origin.x ,coordinate_system.origin.y), 5, 40, 20, WHITE);
+        DrawText(TextFormat("y = "),5, 85, 20,BLUE);
+        DrawText(TextFormat("y = "),5, 145, 20,GREEN);
+
+        if (GuiTextBox(Rectangle{ 40, 80, 150, 30 }, equation, 64, editMode)) {
             editMode = !editMode;
         }
-
-        coordinate_system.DrawCoordinateSystem();
-        coordinate_system.DrawFunction(equation);
-
+        if (GuiTextBox(Rectangle{ 40, 140, 150, 30 }, equation2, 64, editMode2)) {
+            editMode2 = !editMode2;
+        }
 
         EndDrawing();
     }

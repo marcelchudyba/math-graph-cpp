@@ -28,7 +28,7 @@ public:
     void GetCenter();
     void ChangePixelStep();
     std::string CutPrefix(const std::string& expr);
-    void DrawFunction(const std::string& expr);
+    void DrawFunction(const std::string& expr,Color color);
     Vector2 ConvertXY(double x, double y);
 
 };
