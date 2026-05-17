@@ -3,7 +3,7 @@
 #include <string>
 
 #define RAYGUI_IMPLEMENTATION
-#include <raygui.h>
+#include "raygui.h"
 
 #include "CoordinateSystem.h"
 
@@ -17,7 +17,7 @@ int main() {
     SetWindowState(FLAG_WINDOW_ALWAYS_RUN);
     float scale = 50.0f;
     const int step = 1;
-    SetTargetFPS(144);
+    SetTargetFPS(999);
 
     CoordinateSystem coordinate_system = CoordinateSystem(screen_width, screen_height, scale,step);
 
@@ -63,6 +63,10 @@ int main() {
             scale += scale * wheelMove * zoomFactor;
             if (scale < 2.0f) {
                 scale = 2.0f;
+            }
+            if (scale > 10000.0f)
+            {
+                scale = 10000.0f;
             }
             coordinate_system.UpdateScale(scale);
             TraceLog(LOG_INFO, "Wartosc scale: %0.0f", scale);

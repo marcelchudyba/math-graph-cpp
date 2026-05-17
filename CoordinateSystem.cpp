@@ -165,7 +165,7 @@ void CoordinateSystem::DrawFunction(const std::string &expr,Color color) {
 
             double frequency = 1 / (scale / 5);
             if(frequency > 0.30) frequency = 0.30;
-
+            if (frequency < 0.01) frequency = 0.01;
             double starting_y = 0;
             double ending_y = 0;
 
