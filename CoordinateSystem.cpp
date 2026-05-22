@@ -123,17 +123,17 @@ void CoordinateSystem::AddPoint(int x, int y) {
     points.push_back(Point(x,y));
 }
 
-void CoordinateSystem::DrawPoint(Point point) {
+void CoordinateSystem::DrawPoint(Point point,Color color) {
     Vector2 converted_point = ConvertXY(point.GetX(),point.GetY());
     float radius = scale / 10.0f;
     if (radius < 3.0f) radius = 3.0f;
 
-    DrawCircle(converted_point.x, converted_point.y, radius, WHITE);
+    DrawCircle(converted_point.x, converted_point.y, radius, color);
 }
 void CoordinateSystem::DrawPoints() {
     if(!this->points.empty()) {
         for (Point &point : this->points) {
-            DrawPoint(point);
+            DrawPoint(point,WHITE);
         }
     }
 }
@@ -212,7 +212,7 @@ void CoordinateSystem::DrawSequence(const std::string &expr,Color color)
             }
 
             Point point = Point(i,y);
-            DrawPoint(point);
+            DrawPoint(point,color);
         }
 
     }catch(std::exception &e) {

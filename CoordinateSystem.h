@@ -22,7 +22,7 @@ public:
     void DrawCoordinateSystem();
     void DrawStep(int x, int y,int text_x, int text_y, int value,bool direction);
     void AddPoint(int x, int y);
-    void DrawPoint(Point point);
+    void DrawPoint(Point point,Color color);
     void DrawPoints();
     void UpdateScale(int new_value);
     void GetCenter();
