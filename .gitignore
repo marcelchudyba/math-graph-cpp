@@ -30,7 +30,7 @@
 cmake-build-*/
 *.iml
 *.iws
-*raygui.h
 # Operating System files
 .DS_Store
 Thumbs.db
+raygui.h

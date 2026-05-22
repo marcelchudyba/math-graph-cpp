@@ -27,6 +27,7 @@ public:
     void UpdateScale(int new_value);
     void GetCenter();
     void ChangePixelStep();
+    void DrawSequence(const std::string& expr,Color color);
     std::string CutPrefix(const std::string& expr);
     void DrawFunction(const std::string& expr,Color color);
     Vector2 ConvertXY(double x, double y);

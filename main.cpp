@@ -36,7 +36,7 @@ int main() {
         ClearBackground(BLACK);
         coordinate_system.DrawCoordinateSystem();
         coordinate_system.DrawFunction(equation,BLUE);
-        coordinate_system.DrawFunction(equation2,GREEN);
+        coordinate_system.DrawSequence(equation2,GREEN);
 
 
 

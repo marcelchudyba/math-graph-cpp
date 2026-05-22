@@ -189,9 +189,33 @@ void CoordinateSystem::DrawFunction(const std::string &expr,Color color) {
               }
 
          }catch(std::exception &e) {
-             TraceLog(LOG_INFO, "Error: %s", e.what());
+             // TraceLog(LOG_INFO, "Error: %s", e.what());
          }
 }
 
 
 
+void CoordinateSystem::DrawSequence(const std::string &expr,Color color)
+{
+    try {
+        std::string ready_expr = CutPrefix(expr);
+        StoneMath::StoneMath eval = StoneMath::StoneMath(ready_expr);
+
+
+        double y = 0;
+
+        for(double i = 1; i <= end_cart_x; i+=length_of_step) {
+            y = eval.Evaluate(i);
+
+            if(start_cart_y > y || end_cart_y < y) {
+                continue;
+            }
+
+            Point point = Point(i,y);
+            DrawPoint(point);
+        }
+
+    }catch(std::exception &e) {
+        // TraceLog(LOG_INFO, "Error: %s", e.what());
+    }
+}
