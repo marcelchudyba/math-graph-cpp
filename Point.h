@@ -8,13 +8,13 @@
 
 
 class Point {
-    int x;
-    int y;
+    double x;
+    double y;
 public:
-    Point(int x, int y);
+    Point(double x, double y);
 
-    int GetX() const;
-    int GetY() const;
+    double GetX() const;
+    double GetY() const;
 
 
 };

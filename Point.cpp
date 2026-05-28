@@ -1,10 +1,10 @@
 #include "Point.h"
 
 
-Point::Point(int x, int y) : x(x), y(y){};
-int Point::GetX() const {
+Point::Point(double x, double y) : x(x), y(y){};
+double Point::GetX() const {
     return x;
 }
-int Point::GetY() const {
+double Point::GetY() const {
     return y;
 }
