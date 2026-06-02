@@ -65,9 +65,9 @@ int main() {
             if (scale < 0.000001f) {
                 scale = 0.000001f;
             }
-            if (scale > 10000.0f)
+            if (scale > 100000.0f)
             {
-                scale = 10000.0f;
+                scale = 100000.0f;
             }
             coordinate_system.UpdateScale(scale);
             TraceLog(LOG_INFO, "Wartosc scale: %f", scale);

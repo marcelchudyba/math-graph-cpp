@@ -50,7 +50,7 @@ void CoordinateSystem::DrawStep(int x, int y,float text_x, float text_y, double 
 
 void CoordinateSystem::UpdateScale(double new_value) {
     // Zabezpieczenie przed podziałem przez zero lub skalami ujemnymi
-    if (new_value > 10000.0) new_value = 10000.0;
+    if (new_value > 100000.0) new_value = 100000.0;
     if (new_value <= 0.000001) new_value = 0.000001;
 
     scale = new_value;
