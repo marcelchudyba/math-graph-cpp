@@ -13,7 +13,7 @@ public:
     std::vector<Point> points;
     Vector2 origin;
     int screen_width,screen_height;
-    int gridStep;
+    double gridStep;
     double scale;
     float length_of_step;
     double pixel_step;
@@ -21,7 +21,7 @@ public:
     CoordinateSystem(int screen_width, int screen_height,float scale,int gridStep);
     void DrawGrid();
     void DrawCoordinateSystem();
-    void DrawStep(int x, int y,int text_x, int text_y, int value,bool direction);
+    void DrawStep(int x, int y,float text_x, float text_y, double value,bool direction);
     void AddPoint(int x, int y);
     void DrawPoint(Point point,Color color);
     void DrawPoints();

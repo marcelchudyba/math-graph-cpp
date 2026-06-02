@@ -15,7 +15,7 @@ CoordinateSystem::CoordinateSystem(int screen_width, int screen_height, float sc
     UpdateScale(scale);
 };
 
-void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, bool direction) {
+void CoordinateSystem::DrawStep(int x, int y,float text_x, float text_y, double value, bool direction) {
         //direction == true points at steps on OX
         if(direction) {
             if(x != origin.x) DrawLine(x, 0, x,screen_height, GRAY);
@@ -27,7 +27,7 @@ void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, 
         }
 
 
-        int text_xx;
+        float text_xx;
 
         if(x < 30 && y != origin.y)
             text_xx = 30 + text_x;
@@ -36,7 +36,7 @@ void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, 
         else
             text_xx = x + text_x;
 
-        int text_yy;
+        float text_yy;
 
         if(y < 0 && x != origin.x)
             text_yy = text_y;
@@ -45,7 +45,7 @@ void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, 
         else
             text_yy = y + text_y;
 
-        DrawText(TextFormat("%i", value), text_xx, text_yy,15,  WHITE);
+        DrawText(TextFormat("%g", value), text_xx, text_yy,15,  WHITE);
 }
 
 void CoordinateSystem::UpdateScale(double new_value) {
@@ -68,12 +68,10 @@ void CoordinateSystem::UpdateScale(double new_value) {
         else if (normalizedStep <= 2.0) cleanStep = 2.0;
         else if (normalizedStep <= 5.0) cleanStep = 5.0;
         else                            cleanStep = 10.0;
-        gridStep = static_cast<int>(cleanStep * magnitude);
+        gridStep = cleanStep * magnitude;
 
     // Dodatkowe zabezpieczenie sanitarne
-    if (gridStep < 1) {
-        gridStep = 1;
-    }
+
 
     pixel_step = gridStep * scale;
 
@@ -96,7 +94,13 @@ void CoordinateSystem::DrawGrid() {
 
         float step = 0;
 
-        if (pixel_step < 1.0) return;
+        if (pixel_step < 1.0)
+        {
+            TraceLog(LOG_INFO, "DrawGrid");
+            return;
+        }
+
+
 
         for(double i = center_of_grid_x; i < screen_width; i+= pixel_step) {
             DrawStep(i, center_of_grid_y,-3, 15, step,true);
@@ -118,7 +122,7 @@ void CoordinateSystem::DrawGrid() {
             DrawStep(center_of_grid_x, i,-20, -8, step,false);
             step += gridStep;
          }
-  DrawLine(center_of_grid_x, 0, center_of_grid_x, screen_height, RED);
+        DrawLine(center_of_grid_x, 0, center_of_grid_x, screen_height, RED);
 
         DrawLine(0, center_of_grid_y,screen_width , center_of_grid_y, RED);
 }
