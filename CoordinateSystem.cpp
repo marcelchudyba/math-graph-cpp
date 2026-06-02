@@ -6,6 +6,9 @@
 
 #include "Point.h"
 
+
+
+
 CoordinateSystem::CoordinateSystem(int screen_width, int screen_height, float scale,int gridStep) :
     screen_width(screen_width), screen_height(screen_height), scale(scale),gridStep(gridStep),length_of_step(1) {
     GetCenter();
@@ -46,17 +49,33 @@ void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, 
 }
 
 void CoordinateSystem::UpdateScale(int new_value) {
+    // Zabezpieczenie przed podziałem przez zero lub skalami ujemnymi
+    if (new_value <= 0) {
+        new_value = 1;
+    }
     scale = new_value;
 
-    int min_pixel_spacing = 50;
+    int min_pixel_spacing = 40;
 
-    if ((int)(min_pixel_spacing / scale) % 5 == 0 || ((int)(min_pixel_spacing / scale) % 2 == 0 && (int)(min_pixel_spacing / scale) % 4 != 0 &&(int)(min_pixel_spacing / scale) % 6 != 0)|| (int)(min_pixel_spacing / scale) % 10 == 0)
-    {
-         gridStep = min_pixel_spacing / scale;
+    double rawStep = static_cast<double>(min_pixel_spacing) / scale;
+
+    if (rawStep >= 1.0) {
+        double exponent = std::floor(std::log10(rawStep));
+        double magnitude = std::pow(10.0, exponent);
+        double normalizedStep = rawStep / magnitude;
+
+        double cleanStep;
+        if (normalizedStep <= 1.0)      cleanStep = 1.0;
+        else if (normalizedStep <= 2.0) cleanStep = 2.0;
+        else if (normalizedStep <= 5.0) cleanStep = 5.0;
+        else                            cleanStep = 10.0;
+        gridStep = static_cast<int>(cleanStep * magnitude);
+    } else {
+        gridStep = 1;
     }
 
-
-    if(gridStep < 1) {
+    // Dodatkowe zabezpieczenie sanitarne
+    if (gridStep < 1) {
         gridStep = 1;
     }
 
@@ -78,11 +97,8 @@ void CoordinateSystem::DrawGrid() {
         int center_of_grid_x = origin.x;
         int center_of_grid_y = origin.y;
 
-        DrawLine(center_of_grid_x, 0, center_of_grid_x, screen_height, RED);
 
-        DrawLine(0, center_of_grid_y,screen_width , center_of_grid_y, RED);
         float step = 0;
-
 
 
         for(int i = center_of_grid_x; i < screen_width; i+= pixel_step) {
@@ -105,7 +121,9 @@ void CoordinateSystem::DrawGrid() {
             DrawStep(center_of_grid_x, i,-20, -8, step,false);
             step += gridStep;
          }
+  DrawLine(center_of_grid_x, 0, center_of_grid_x, screen_height, RED);
 
+        DrawLine(0, center_of_grid_y,screen_width , center_of_grid_y, RED);
 }
 
 void CoordinateSystem::GetCenter() {

@@ -48,6 +48,7 @@ int main() {
             coordinate_system.origin.y += delta.y;
 
             SetMouseCursor(MOUSE_CURSOR_RESIZE_ALL);
+
             coordinate_system.UpdateScale(scale);
         } else {
             SetMouseCursor(DEFAULT);
@@ -60,7 +61,7 @@ int main() {
         if (wheelMove != 0.0f) {
 
             float zoomFactor = 0.1f;
-            scale += scale * wheelMove * zoomFactor;
+            scale +=  wheelMove * scale * zoomFactor;
             if (scale < 1.0f) {
                 scale = 1.0f;
             }
