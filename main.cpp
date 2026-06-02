@@ -12,7 +12,7 @@
 int main() {
 
     const int screen_width = 1280;
-    const int screen_height = 800;
+    const int screen_height = 720;
     InitWindow(screen_width, screen_height, "Math Graph");
     SetWindowState(FLAG_WINDOW_ALWAYS_RUN);
     float scale = 50.0f;
@@ -61,8 +61,8 @@ int main() {
 
             float zoomFactor = 0.1f;
             scale += scale * wheelMove * zoomFactor;
-            if (scale < 2.0f) {
-                scale = 2.0f;
+            if (scale < 1.0f) {
+                scale = 1.0f;
             }
             if (scale > 10000.0f)
             {

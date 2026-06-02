@@ -49,7 +49,12 @@ void CoordinateSystem::UpdateScale(int new_value) {
     scale = new_value;
 
     int min_pixel_spacing = 50;
-    gridStep = min_pixel_spacing / scale;
+
+    if ((int)(min_pixel_spacing / scale) % 5 == 0 || ((int)(min_pixel_spacing / scale) % 2 == 0 && (int)(min_pixel_spacing / scale) % 4 != 0 &&(int)(min_pixel_spacing / scale) % 6 != 0)|| (int)(min_pixel_spacing / scale) % 10 == 0)
+    {
+         gridStep = min_pixel_spacing / scale;
+    }
+
 
     if(gridStep < 1) {
         gridStep = 1;
@@ -76,7 +81,7 @@ void CoordinateSystem::DrawGrid() {
         DrawLine(center_of_grid_x, 0, center_of_grid_x, screen_height, RED);
 
         DrawLine(0, center_of_grid_y,screen_width , center_of_grid_y, RED);
-        int step = 0;
+        float step = 0;
 
 
 

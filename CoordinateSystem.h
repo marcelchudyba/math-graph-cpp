@@ -12,7 +12,8 @@ class CoordinateSystem {
 public:
     std::vector<Point> points;
     Vector2 origin;
-    int screen_width,screen_height,gridStep;
+    int screen_width,screen_height;
+    int gridStep;
     float scale;
     float length_of_step;
     int pixel_step;
