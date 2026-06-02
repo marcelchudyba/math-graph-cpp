@@ -14,9 +14,9 @@ public:
     Vector2 origin;
     int screen_width,screen_height;
     int gridStep;
-    float scale;
+    double scale;
     float length_of_step;
-    int pixel_step;
+    double pixel_step;
     int start_cart_x, end_cart_x,start_cart_y, end_cart_y;
     CoordinateSystem(int screen_width, int screen_height,float scale,int gridStep);
     void DrawGrid();
@@ -25,7 +25,7 @@ public:
     void AddPoint(int x, int y);
     void DrawPoint(Point point,Color color);
     void DrawPoints();
-    void UpdateScale(int new_value);
+    void UpdateScale(double new_value);
     void GetCenter();
     void ChangePixelStep();
     void DrawSequence(const std::string& expr,Color color);

@@ -48,18 +48,17 @@ void CoordinateSystem::DrawStep(int x, int y,int text_x, int text_y, int value, 
         DrawText(TextFormat("%i", value), text_xx, text_yy,15,  WHITE);
 }
 
-void CoordinateSystem::UpdateScale(int new_value) {
+void CoordinateSystem::UpdateScale(double new_value) {
     // Zabezpieczenie przed podziałem przez zero lub skalami ujemnymi
-    if (new_value <= 0) {
-        new_value = 1;
-    }
+    if (new_value > 10000.0) new_value = 10000.0;
+    if (new_value <= 0.000001) new_value = 0.000001;
+
     scale = new_value;
 
-    int min_pixel_spacing = 40;
+    int min_pixel_spacing = 50;
 
     double rawStep = static_cast<double>(min_pixel_spacing) / scale;
 
-    if (rawStep >= 1.0) {
         double exponent = std::floor(std::log10(rawStep));
         double magnitude = std::pow(10.0, exponent);
         double normalizedStep = rawStep / magnitude;
@@ -70,9 +69,6 @@ void CoordinateSystem::UpdateScale(int new_value) {
         else if (normalizedStep <= 5.0) cleanStep = 5.0;
         else                            cleanStep = 10.0;
         gridStep = static_cast<int>(cleanStep * magnitude);
-    } else {
-        gridStep = 1;
-    }
 
     // Dodatkowe zabezpieczenie sanitarne
     if (gridStep < 1) {
@@ -100,24 +96,25 @@ void CoordinateSystem::DrawGrid() {
 
         float step = 0;
 
+        if (pixel_step < 1.0) return;
 
-        for(int i = center_of_grid_x; i < screen_width; i+= pixel_step) {
+        for(double i = center_of_grid_x; i < screen_width; i+= pixel_step) {
             DrawStep(i, center_of_grid_y,-3, 15, step,true);
             step += gridStep;
         }
         step = -gridStep;
-        for(int i = center_of_grid_x - pixel_step; i > 0; i-= pixel_step) {
+        for(double i = center_of_grid_x - pixel_step; i > 0; i-= pixel_step) {
             DrawStep(i, center_of_grid_y,-11, 15, step,true);
             step -= gridStep;
         }
 
         step = 0;
-        for(int i = center_of_grid_y; i < screen_height; i+= pixel_step) {
+        for(double i = center_of_grid_y; i < screen_height; i+= pixel_step) {
             DrawStep(center_of_grid_x, i,-20, -8, step,false);
             step -= gridStep;
         }
         step = gridStep;
-         for(int i = center_of_grid_y - pixel_step; i > 0; i-= pixel_step) {
+         for(double i = center_of_grid_y - pixel_step; i > 0; i-= pixel_step) {
             DrawStep(center_of_grid_x, i,-20, -8, step,false);
             step += gridStep;
          }
@@ -187,8 +184,8 @@ void CoordinateSystem::DrawFunction(const std::string &expr,Color color) {
             StoneMath::StoneMath eval = StoneMath::StoneMath(ready_expr);
 
             double frequency = 1 / (scale / 5);
-            if(frequency > 0.30) frequency = 0.30;
-            if (frequency < 0.01) frequency = 0.01;
+            // if(frequency > 0.30) frequency = 0.30;
+            // if (frequency < 0.01) frequency = 0.01;
             double starting_y = 0;
             double ending_y = 0;
 
